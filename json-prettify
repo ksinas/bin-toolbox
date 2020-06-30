@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+process.stdin.setEncoding('utf8');
+
+let data = '';
+process.stdin.on('readable', function onReadable() {
+  if (data) return;
+  let chunk;
+  // Use a loop to make sure we read all available data.
+  while ((chunk = process.stdin.read()) !== null) {
+    data += chunk;
+  }
+  data = data.trim();
+  const json = JSON.parse(data);
+  const jString = JSON.stringify(json, null, 2);
+  process.stdout.write(jString+'\n');
+});
